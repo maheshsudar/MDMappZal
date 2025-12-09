@@ -17,7 +17,7 @@
     "redis": "^4.7.1",
     "soap": "^1.0.0",
     "sqlite3": "^5.1.6",
-    "uuid": "^9.0.0"
+    "uuid": "^9.0.1"
   },
   "devDependencies": {
     "@cap-js/sqlite": "^1",
