@@ -1,0 +1,230 @@
+{
+  "_version": "1.49.0",
+  "sap.app": {
+    "id": "com.company.mdmapproval",
+    "type": "application",
+    "i18n": "i18n/i18n.properties",
+    "applicationVersion": {
+      "version": "1.0.0"
+    },
+    "title": "{{appTitle}}",
+    "description": "{{appDescription}}",
+    "resources": "resources.json",
+    "sourceTemplate": {
+      "id": "@sap/generator-fiori:lrop",
+      "version": "1.8.0",
+      "toolsId": "4f8d3a9c-f6d7-4c3a-9b2e-8f7d6c5b4a3d"
+    },
+    "dataSources": {
+      "mainService": {
+        "uri": "/mdm/",
+        "type": "OData",
+        "settings": {
+          "annotations": [
+            "annotation"
+          ],
+          "localUri": "localService/metadata.xml",
+          "odataVersion": "4.0"
+        }
+      },
+      "i18n": {
+        "type": "ResourceBundle",
+        "uri": "i18n/i18n.properties"
+      },
+      "sapBusinessPartnerAPI": {
+        "uri": "/sap/opu/odata/sap/API_BUSINESS_PARTNER/",
+        "type": "OData",
+        "settings": {
+          "annotations": ["sapBusinessPartnerAPI_Annotation"],
+          "localUri": "localService/API_BUSINESS_PARTNER/metadata.xml",
+          "odataVersion": "2.0"
+        }
+      },
+      "sapBusinessPartnerAPI_Annotation": {
+        "uri": "/sap/opu/odata/IWFND/CATALOGSERVICE;v=2/Annotations(TechnicalName='API_BUSINESS_PARTNER_VAN',Version='0001')/$value/",
+        "type": "ODataAnnotation",
+        "settings": {
+          "localUri": "localService/API_BUSINESS_PARTNER_VAN.xml"
+        }
+      },
+      "annotation": {
+        "type": "ODataAnnotation",
+        "uri": "annotations/annotation.xml",
+        "settings": {
+          "localUri": "annotations/annotation.xml"
+        }
+      }
+    }
+  },
+  "sap.ui": {
+    "technology": "UI5",
+    "icons": {
+      "icon": "sap-icon://business-partner",
+      "favIcon": "",
+      "phone": "",
+      "phone@2": "",
+      "tablet": "",
+      "tablet@2": ""
+    },
+    "deviceTypes": {
+      "desktop": true,
+      "tablet": true,
+      "phone": true
+    }
+  },
+  "sap.ui5": {
+    "flexEnabled": true,
+    "dependencies": {
+      "minUI5Version": "1.102.0",
+      "libs": {
+        "sap.m": {},
+        "sap.ui.core": {},
+        "sap.ushell": {},
+        "sap.fe.templates": {},
+        "sap.f": {},
+        "sap.ui.comp": {},
+        "sap.ui.generic.app": {},
+        "sap.ui.table": {},
+        "sap.suite.ui.commons": {},
+        "sap.suite.ui.microchart": {},
+        "sap.ui.layout": {},
+        "sap.ui.unified": {},
+        "sap.collaboration": {}
+      }
+    },
+    "models": {
+      "i18n": {
+        "dataSource": "i18n",
+        "type": "sap.ui.model.resource.ResourceModel",
+        "settings": {
+          "bundleName": "com.company.mdmapproval.i18n.i18n"
+        }
+      },
+      "": {
+        "dataSource": "mainService",
+        "preload": true,
+        "settings": {
+          "synchronizationMode": "None",
+          "operationMode": "Server",
+          "autoExpandSelect": true,
+          "earlyRequests": true
+        }
+      },
+      "@i18n": {
+        "type": "sap.ui.model.resource.ResourceModel",
+        "uri": "i18n/i18n.properties"
+      },
+      "sapBP": {
+        "dataSource": "sapBusinessPartnerAPI",
+        "type": "sap.ui.model.odata.v2.ODataModel",
+        "settings": {
+          "defaultOperationMode": "Server",
+          "defaultBindingMode": "OneWay",
+          "defaultCountMode": "Request",
+          "useBatch": true
+        }
+      }
+    },
+    "routing": {
+      "config": {
+        "routerClass": "sap.ui.core.routing.Router"
+      },
+      "routes": [
+        {
+          "pattern": ":?query:",
+          "name": "BusinessPartnerRequestsList",
+          "target": "BusinessPartnerRequestsList"
+        },
+        {
+          "pattern": "BusinessPartnerRequests({key}):?query:",
+          "name": "BusinessPartnerRequestsObjectPage",
+          "target": "BusinessPartnerRequestsObjectPage"
+        }
+      ],
+      "targets": {
+        "BusinessPartnerRequestsList": {
+          "type": "Component",
+          "id": "BusinessPartnerRequestsList",
+          "name": "sap.fe.templates.ListReport",
+          "options": {
+            "settings": {
+              "contextPath": "/BusinessPartnerRequests",
+              "variantManagement": "Page",
+              "navigation": {
+                "BusinessPartnerRequests": {
+                  "detail": {
+                    "route": "BusinessPartnerRequestsObjectPage"
+                  }
+                }
+              },
+              "controlConfiguration": {
+                "@com.sap.vocabularies.UI.v1.LineItem": {
+                  "tableSettings": {
+                    "type": "ResponsiveTable",
+                    "selectionMode": "Multi",
+                    "enableExport": true
+                  }
+                }
+              }
+            }
+          }
+        },
+        "BusinessPartnerRequestsObjectPage": {
+          "type": "Component",
+          "id": "BusinessPartnerRequestsObjectPage",
+          "name": "sap.fe.templates.ObjectPage",
+          "options": {
+            "settings": {
+              "editableHeaderContent": false,
+              "contextPath": "/BusinessPartnerRequests",
+              "navigation": {},
+              "controlConfiguration": {
+                "addresses/@com.sap.vocabularies.UI.v1.LineItem": {
+                  "tableSettings": {
+                    "type": "ResponsiveTable",
+                    "enableExport": true
+                  }
+                },
+                "vatIds/@com.sap.vocabularies.UI.v1.LineItem": {
+                  "tableSettings": {
+                    "type": "ResponsiveTable",
+                    "enableExport": true
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "sap.cloud": {
+    "public": true,
+    "service": "com.company.mdmapproval"
+  },
+  "sap.fiori": {
+    "registrationIds": [],
+    "archeType": "transactional"
+  },
+  "sap.fe": {
+    "quickActions": {
+      "BusinessPartnerRequests": {
+        "intent": "#BusinessPartnerRequests-manage"
+      }
+    }
+  },
+  "sap.app/crossNavigation": {
+    "inbounds": {
+      "BusinessPartnerRequests-manage": {
+        "semanticObject": "BusinessPartnerRequests",
+        "action": "manage",
+        "title": "{{flpTitle}}",
+        "subTitle": "{{flpSubtitle}}",
+        "signature": {
+          "parameters": {},
+          "additionalParameters": "allowed"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,290 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="4.0" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+    <edmx:Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/Common.xml">
+        <edmx:Include Namespace="com.sap.vocabularies.Common.v1" Alias="Common"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/UI.xml">
+        <edmx:Include Namespace="com.sap.vocabularies.UI.v1" Alias="UI"/>
+    </edmx:Reference>
+    <edmx:DataServices>
+        <Schema Namespace="com.company.couparequests.annotations" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+
+            <!-- Coupa Requests Annotations -->
+            <Annotations Target="MDMService.CoupaRequests">
+
+                <!-- List Report Page -->
+                <Annotation Term="UI.LineItem">
+                    <Collection>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="requestNumber"/>
+                            <PropertyValue Property="Label" String="Request Number"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="partnerName"/>
+                            <PropertyValue Property="Label" String="Supplier Name"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="requestType"/>
+                            <PropertyValue Property="Label" String="Request Type"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="status"/>
+                            <PropertyValue Property="Label" String="Status"/>
+                            <PropertyValue Property="Criticality" Path="statusCriticality"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="coupaInternalNo"/>
+                            <PropertyValue Property="Label" String="Coupa ID"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="createdAt"/>
+                            <PropertyValue Property="Label" String="Created Date"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="sapBpNumber"/>
+                            <PropertyValue Property="Label" String="SAP BP Number"/>
+                        </Record>
+                    </Collection>
+                </Annotation>
+
+                <!-- Selection Fields -->
+                <Annotation Term="UI.SelectionFields">
+                    <Collection>
+                        <PropertyPath>status</PropertyPath>
+                        <PropertyPath>requestType</PropertyPath>
+                        <PropertyPath>createdAt</PropertyPath>
+                    </Collection>
+                </Annotation>
+
+                <!-- Header Info -->
+                <Annotation Term="UI.HeaderInfo">
+                    <Record Type="UI.HeaderInfoType">
+                        <PropertyValue Property="TypeName" String="Coupa Supplier Request"/>
+                        <PropertyValue Property="TypeNamePlural" String="Coupa Supplier Requests"/>
+                        <PropertyValue Property="Title">
+                            <Record Type="UI.DataField">
+                                <PropertyValue Property="Value" Path="partnerName"/>
+                            </Record>
+                        </PropertyValue>
+                        <PropertyValue Property="Description">
+                            <Record Type="UI.DataField">
+                                <PropertyValue Property="Value" Path="requestNumber"/>
+                            </Record>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+
+                <!-- Object Page Facets -->
+                <Annotation Term="UI.Facets">
+                    <Collection>
+                        <!-- General Information Section -->
+                        <Record Type="UI.CollectionFacet">
+                            <PropertyValue Property="ID" String="GeneralInformation"/>
+                            <PropertyValue Property="Label" String="General Information"/>
+                            <PropertyValue Property="Facets">
+                                <Collection>
+                                    <Record Type="UI.ReferenceFacet">
+                                        <PropertyValue Property="ID" String="BasicInfo"/>
+                                        <PropertyValue Property="Label" String="Basic Information"/>
+                                        <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#BasicInfo"/>
+                                    </Record>
+                                </Collection>
+                            </PropertyValue>
+                        </Record>
+
+                        <!-- Address Information Table -->
+                        <Record Type="UI.ReferenceFacet">
+                            <PropertyValue Property="ID" String="AddressesTable"/>
+                            <PropertyValue Property="Label" String="Addresses"/>
+                            <PropertyValue Property="Target" AnnotationPath="addresses/@UI.LineItem"/>
+                        </Record>
+
+                        <!-- Email Information Table -->
+                        <Record Type="UI.ReferenceFacet">
+                            <PropertyValue Property="ID" String="EmailsTable"/>
+                            <PropertyValue Property="Label" String="Email Addresses"/>
+                            <PropertyValue Property="Target" AnnotationPath="emails/@UI.LineItem"/>
+                        </Record>
+
+                        <!-- Bank Account Information Table -->
+                        <Record Type="UI.ReferenceFacet">
+                            <PropertyValue Property="ID" String="BanksTable"/>
+                            <PropertyValue Property="Label" String="Bank Accounts"/>
+                            <PropertyValue Property="Target" AnnotationPath="banks/@UI.LineItem"/>
+                        </Record>
+
+                        <!-- VAT ID Information Table -->
+                        <Record Type="UI.ReferenceFacet">
+                            <PropertyValue Property="ID" String="VatIdsTable"/>
+                            <PropertyValue Property="Label" String="VAT IDs"/>
+                            <PropertyValue Property="Target" AnnotationPath="vatIds/@UI.LineItem"/>
+                        </Record>
+
+                        <!-- Compliance Information -->
+                        <Record Type="UI.ReferenceFacet">
+                            <PropertyValue Property="ID" String="ComplianceInfo"/>
+                            <PropertyValue Property="Label" String="Compliance Information"/>
+                            <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#ComplianceInfo"/>
+                        </Record>
+                    </Collection>
+                </Annotation>
+
+                <!-- Field Groups -->
+                <Annotation Term="UI.FieldGroup" Qualifier="BasicInfo">
+                    <Record Type="UI.FieldGroupType">
+                        <PropertyValue Property="Data">
+                            <Collection>
+                                <Record Type="UI.DataField">
+                                    <PropertyValue Property="Value" Path="partnerName"/>
+                                    <PropertyValue Property="Label" String="Supplier Name"/>
+                                </Record>
+                                <Record Type="UI.DataField">
+                                    <PropertyValue Property="Value" Path="searchTerm"/>
+                                    <PropertyValue Property="Label" String="Search Term"/>
+                                </Record>
+                                <Record Type="UI.DataField">
+                                    <PropertyValue Property="Value" Path="partnerRole"/>
+                                    <PropertyValue Property="Label" String="Partner Role"/>
+                                </Record>
+                                <Record Type="UI.DataField">
+                                    <PropertyValue Property="Value" Path="businessChannels"/>
+                                    <PropertyValue Property="Label" String="Business Channels"/>
+                                </Record>
+                                <Record Type="UI.DataField">
+                                    <PropertyValue Property="Value" Path="coupaInternalNo"/>
+                                    <PropertyValue Property="Label" String="Coupa Internal ID"/>
+                                </Record>
+                                <Record Type="UI.DataField">
+                                    <PropertyValue Property="Value" Path="paymentTerms"/>
+                                    <PropertyValue Property="Label" String="Payment Terms"/>
+                                </Record>
+                                <Record Type="UI.DataField">
+                                    <PropertyValue Property="Value" Path="paymentMethod"/>
+                                    <PropertyValue Property="Label" String="Payment Method"/>
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+
+                <Annotation Term="UI.FieldGroup" Qualifier="ComplianceInfo">
+                    <Record Type="UI.FieldGroupType">
+                        <PropertyValue Property="Data">
+                            <Collection>
+                                <Record Type="UI.DataField">
+                                    <PropertyValue Property="Value" Path="aebComplianceStatus"/>
+                                    <PropertyValue Property="Label" String="AEB Compliance Status"/>
+                                </Record>
+                                <Record Type="UI.DataField">
+                                    <PropertyValue Property="Value" Path="viesValidationStatus"/>
+                                    <PropertyValue Property="Label" String="VIES Validation Status"/>
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+            </Annotations>
+
+            <!-- Partner Addresses Annotations -->
+            <Annotations Target="MDMService.PartnerAddresses">
+                <Annotation Term="UI.LineItem">
+                    <Collection>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="addressType"/>
+                            <PropertyValue Property="Label" String="Address Type"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="name1"/>
+                            <PropertyValue Property="Label" String="Name 1"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="street"/>
+                            <PropertyValue Property="Label" String="Street"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="city"/>
+                            <PropertyValue Property="Label" String="City"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="postalCode"/>
+                            <PropertyValue Property="Label" String="Postal Code"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="country_code"/>
+                            <PropertyValue Property="Label" String="Country"/>
+                        </Record>
+                    </Collection>
+                </Annotation>
+            </Annotations>
+
+            <!-- Partner Emails Annotations -->
+            <Annotations Target="MDMService.PartnerEmails">
+                <Annotation Term="UI.LineItem">
+                    <Collection>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="emailType"/>
+                            <PropertyValue Property="Label" String="Email Type"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="emailAddress"/>
+                            <PropertyValue Property="Label" String="Email Address"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="isDefault"/>
+                            <PropertyValue Property="Label" String="Default"/>
+                        </Record>
+                    </Collection>
+                </Annotation>
+            </Annotations>
+
+            <!-- Partner Banks Annotations -->
+            <Annotations Target="MDMService.PartnerBanks">
+                <Annotation Term="UI.LineItem">
+                    <Collection>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="bankName"/>
+                            <PropertyValue Property="Label" String="Bank Name"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="accountHolder"/>
+                            <PropertyValue Property="Label" String="Account Holder"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="iban"/>
+                            <PropertyValue Property="Label" String="IBAN"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="swiftCode"/>
+                            <PropertyValue Property="Label" String="SWIFT Code"/>
+                        </Record>
+                    </Collection>
+                </Annotation>
+            </Annotations>
+
+            <!-- Partner VAT IDs Annotations -->
+            <Annotations Target="MDMService.PartnerVatIds">
+                <Annotation Term="UI.LineItem">
+                    <Collection>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="country_code"/>
+                            <PropertyValue Property="Label" String="Country"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="vatNumber"/>
+                            <PropertyValue Property="Label" String="VAT Number"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="vatType"/>
+                            <PropertyValue Property="Label" String="VAT Type"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="validationStatus"/>
+                            <PropertyValue Property="Label" String="Validation Status"/>
+                        </Record>
+                    </Collection>
+                </Annotation>
+            </Annotations>
+
+        </Schema>
+    </edmx:DataServices>
+</edmx:Edmx>

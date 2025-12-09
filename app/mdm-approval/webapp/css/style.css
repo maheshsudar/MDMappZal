@@ -1,0 +1,400 @@
+/* SAP Fiori Custom Styles for MDM Approval Application */
+
+/* Main Application Styling */
+.sapUiBody {
+    font-family: "72", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+/* Header Styling */
+.mdm-app-header {
+    background: linear-gradient(135deg, #0070f2 0%, #005cbf 100%);
+    color: white;
+    padding: 1rem 2rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.mdm-app-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin: 0;
+}
+
+.mdm-app-subtitle {
+    font-size: 0.875rem;
+    opacity: 0.9;
+    margin: 0.25rem 0 0 0;
+}
+
+/* Status Indicators */
+.mdm-status-draft {
+    background-color: #e8f5e8;
+    color: #2b7d2b;
+    border: 1px solid #2b7d2b;
+    border-radius: 0.25rem;
+    padding: 0.25rem 0.5rem;
+    font-size: 0.75rem;
+    font-weight: 500;
+}
+
+.mdm-status-submitted {
+    background-color: #fff3cd;
+    color: #856404;
+    border: 1px solid #856404;
+    border-radius: 0.25rem;
+    padding: 0.25rem 0.5rem;
+    font-size: 0.75rem;
+    font-weight: 500;
+}
+
+.mdm-status-inreview {
+    background-color: #cce5ff;
+    color: #0070f2;
+    border: 1px solid #0070f2;
+    border-radius: 0.25rem;
+    padding: 0.25rem 0.5rem;
+    font-size: 0.75rem;
+    font-weight: 500;
+}
+
+.mdm-status-approved {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #155724;
+    border-radius: 0.25rem;
+    padding: 0.25rem 0.5rem;
+    font-size: 0.75rem;
+    font-weight: 500;
+}
+
+.mdm-status-rejected {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #721c24;
+    border-radius: 0.25rem;
+    padding: 0.25rem 0.5rem;
+    font-size: 0.75rem;
+    font-weight: 500;
+}
+
+.mdm-status-duplicatereview {
+    background-color: #fff3cd;
+    color: #856404;
+    border: 1px solid #ffc107;
+    border-radius: 0.25rem;
+    padding: 0.25rem 0.5rem;
+    font-size: 0.75rem;
+    font-weight: 500;
+}
+
+/* Action Button Styling */
+.mdm-action-primary {
+    background-color: #0070f2;
+    border-color: #0070f2;
+    color: white;
+    border-radius: 0.25rem;
+    padding: 0.5rem 1rem;
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+
+.mdm-action-primary:hover {
+    background-color: #005cbf;
+    border-color: #005cbf;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px rgba(0, 112, 242, 0.3);
+}
+
+.mdm-action-secondary {
+    background-color: transparent;
+    border-color: #0070f2;
+    color: #0070f2;
+    border-radius: 0.25rem;
+    padding: 0.5rem 1rem;
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+
+.mdm-action-secondary:hover {
+    background-color: rgba(0, 112, 242, 0.1);
+    transform: translateY(-1px);
+}
+
+.mdm-action-destructive {
+    background-color: #dc3545;
+    border-color: #dc3545;
+    color: white;
+    border-radius: 0.25rem;
+    padding: 0.5rem 1rem;
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+
+.mdm-action-destructive:hover {
+    background-color: #c82333;
+    border-color: #c82333;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px rgba(220, 53, 69, 0.3);
+}
+
+/* Card Styling */
+.mdm-card {
+    background: white;
+    border-radius: 0.5rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 1rem;
+    transition: all 0.2s ease;
+}
+
+.mdm-card:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    transform: translateY(-1px);
+}
+
+.mdm-card-header {
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid #e0e0e0;
+    background-color: #f8f9fa;
+    border-radius: 0.5rem 0.5rem 0 0;
+}
+
+.mdm-card-title {
+    font-size: 1.125rem;
+    font-weight: 600;
+    margin: 0;
+    color: #333;
+}
+
+.mdm-card-content {
+    padding: 1.5rem;
+}
+
+/* Form Styling */
+.mdm-form-group {
+    margin-bottom: 1rem;
+}
+
+.mdm-form-label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    color: #555;
+}
+
+.mdm-form-input {
+    width: 100%;
+    padding: 0.5rem 0.75rem;
+    border: 1px solid #d1d5db;
+    border-radius: 0.25rem;
+    font-size: 0.875rem;
+    transition: border-color 0.2s ease;
+}
+
+.mdm-form-input:focus {
+    outline: none;
+    border-color: #0070f2;
+    box-shadow: 0 0 0 3px rgba(0, 112, 242, 0.1);
+}
+
+/* Table Styling */
+.mdm-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    border-radius: 0.5rem;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.mdm-table th {
+    background-color: #f8f9fa;
+    padding: 1rem;
+    text-align: left;
+    font-weight: 600;
+    color: #333;
+    border-bottom: 2px solid #e0e0e0;
+}
+
+.mdm-table td {
+    padding: 1rem;
+    border-bottom: 1px solid #e8e8e8;
+    color: #666;
+}
+
+.mdm-table tr:hover {
+    background-color: rgba(0, 112, 242, 0.05);
+}
+
+/* Notification Styling */
+.mdm-notification {
+    padding: 1rem 1.5rem;
+    border-radius: 0.5rem;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+}
+
+.mdm-notification-success {
+    background-color: #d4edda;
+    color: #155724;
+    border-left: 4px solid #28a745;
+}
+
+.mdm-notification-warning {
+    background-color: #fff3cd;
+    color: #856404;
+    border-left: 4px solid #ffc107;
+}
+
+.mdm-notification-error {
+    background-color: #f8d7da;
+    color: #721c24;
+    border-left: 4px solid #dc3545;
+}
+
+.mdm-notification-info {
+    background-color: #cce5ff;
+    color: #0070f2;
+    border-left: 4px solid #0070f2;
+}
+
+/* Progress Indicator */
+.mdm-progress {
+    width: 100%;
+    height: 4px;
+    background-color: #e0e0e0;
+    border-radius: 2px;
+    overflow: hidden;
+}
+
+.mdm-progress-bar {
+    height: 100%;
+    background: linear-gradient(90deg, #0070f2, #28a745);
+    transition: width 0.3s ease;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .mdm-app-header {
+        padding: 1rem;
+    }
+
+    .mdm-card-content {
+        padding: 1rem;
+    }
+
+    .mdm-table {
+        font-size: 0.875rem;
+    }
+
+    .mdm-table th,
+    .mdm-table td {
+        padding: 0.75rem 0.5rem;
+    }
+}
+
+/* Fiori Elements Overrides */
+.sapFDynamicPageTitle .sapFDynamicPageTitleMainHeading {
+    color: #0070f2;
+}
+
+.sapMBtnEmphasized {
+    background-color: #0070f2;
+    border-color: #0070f2;
+}
+
+.sapMBtnEmphasized:hover {
+    background-color: #005cbf;
+    border-color: #005cbf;
+}
+
+/* Object Status Overrides */
+.sapMObjectStatusNone {
+    color: #666;
+}
+
+.sapMObjectStatusSuccess {
+    color: #28a745;
+}
+
+.sapMObjectStatusWarning {
+    color: #ffc107;
+}
+
+.sapMObjectStatusError {
+    color: #dc3545;
+}
+
+.sapMObjectStatusInformation {
+    color: #0070f2;
+}
+
+/* Custom Icons */
+.mdm-icon-large {
+    font-size: 1.5rem;
+    margin-right: 0.5rem;
+}
+
+.mdm-icon-small {
+    font-size: 1rem;
+    margin-right: 0.25rem;
+}
+
+/* Animation Classes */
+.mdm-fade-in {
+    animation: fadeIn 0.3s ease-in;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.mdm-slide-in {
+    animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+    from { transform: translateX(-100%); }
+    to { transform: translateX(0); }
+}
+
+/* Accessibility Improvements */
+.mdm-sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+/* Focus Indicators */
+.mdm-focus-visible:focus {
+    outline: 2px solid #0070f2;
+    outline-offset: 2px;
+}
+
+/* Loading States */
+.mdm-loading {
+    position: relative;
+    overflow: hidden;
+}
+
+.mdm-loading::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.8), transparent);
+    animation: shimmer 1.5s infinite;
+}
+
+@keyframes shimmer {
+    0% { left: -100%; }
+    100% { left: 100%; }
+}

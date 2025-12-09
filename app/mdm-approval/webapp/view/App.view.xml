@@ -1,0 +1,266 @@
+<mvc:View controllerName="com.company.mdmapproval.controller.App" xmlns:mvc="sap.ui.core.mvc"
+    displayBlock="true" xmlns="sap.m" xmlns:f="sap.f" xmlns:core="sap.ui.core">
+    <App id="app" class="sapUiSizeCompact">
+        <pages>
+            <Page id="appPage" title="{i18n>appTitle}" enableScrolling="false" showNavButton="true" navButtonPress="onNavBack">
+                <content>
+                    <f:ShellBar id="shellBar"
+                        title="{i18n>appTitle}"
+                        homeIcon="sap-icon://business-partner"
+                        showCopilot="false"
+                        showSearch="true"
+                        showNotifications="true"
+                        showProductSwitcher="false"
+                        class="sapUiMediumMarginBottom">
+                        <f:menu>
+                            <Menu>
+                                <items>
+                                    <MenuItem text="{i18n>menuBusinessPartners}" icon="sap-icon://business-partner" press="onNavigateToBusinessPartners"/>
+                                    <MenuItem text="{i18n>menuDuplicates}" icon="sap-icon://duplicate" press="onNavigateToDuplicates"/>
+                                    <MenuItem text="{i18n>menuApprovals}" icon="sap-icon://approvals" press="onNavigateToApprovals"/>
+                                    <MenuItem text="{i18n>menuReports}" icon="sap-icon://pie-chart" press="onNavigateToReports"/>
+                                </items>
+                            </Menu>
+                        </f:menu>
+                        <f:profile>
+                            <Avatar initials="AL" press="onUserMenuPress"/>
+                        </f:profile>
+                    </f:ShellBar>
+
+                    <!-- Main Navigation Container -->
+                    <f:FlexibleColumnLayout id="fcl"
+                        backgroundDesign="Solid"
+                        layout="OneColumn"
+                        stateChange="onStateChanged">
+
+                        <!-- Begin Column for List View -->
+                        <f:beginColumnPages>
+                            <Page id="beginPage" showHeader="false">
+                                <content>
+                                    <!-- Dynamic Page for Business Partner Requests List -->
+                                    <f:DynamicPage id="dynamicPageList"
+                                        headerExpanded="true"
+                                        showFooter="false">
+
+                                        <!-- Dynamic Page Title -->
+                                        <f:title>
+                                            <f:DynamicPageTitle>
+                                                <f:heading>
+                                                    <Title text="{i18n>businessPartnerRequests}" level="H2"/>
+                                                </f:heading>
+                                                <f:actions>
+                                                    <Button text="{i18n>createRequest}"
+                                                        icon="sap-icon://add"
+                                                        type="Emphasized"
+                                                        press="onCreateRequest"/>
+                                                    <Button text="{i18n>refresh}"
+                                                        icon="sap-icon://refresh"
+                                                        press="onRefresh"/>
+                                                </f:actions>
+                                            </f:DynamicPageTitle>
+                                        </f:title>
+
+                                        <!-- Dynamic Page Header -->
+                                        <f:header>
+                                            <f:DynamicPageHeader pinnable="true">
+                                                <VBox class="sapUiMediumMargin">
+                                                    <!-- KPI Cards -->
+                                                    <HBox class="sapUiMediumMarginBottom">
+                                                        <items>
+                                                            <f:Card class="sapUiTinyMarginEnd" width="200px">
+                                                                <f:header>
+                                                                    <card:Header title="{i18n>totalRequests}" />
+                                                                </f:header>
+                                                                <f:content>
+                                                                    <VBox alignItems="Center" class="sapUiMediumMargin">
+                                                                        <Text text="{/totalRequests}" class="sapUiLargeText sapThemeHighlight-asColor"/>
+                                                                        <Text text="{i18n>allTime}" class="sapUiTinyText"/>
+                                                                    </VBox>
+                                                                </f:content>
+                                                            </f:Card>
+
+                                                            <f:Card class="sapUiTinyMarginEnd" width="200px">
+                                                                <f:header>
+                                                                    <card:Header title="{i18n>pendingApproval}" />
+                                                                </f:header>
+                                                                <f:content>
+                                                                    <VBox alignItems="Center" class="sapUiMediumMargin">
+                                                                        <Text text="{/pendingRequests}" class="sapUiLargeText sapUiErrorText-asColor"/>
+                                                                        <Text text="{i18n>requiresAction}" class="sapUiTinyText"/>
+                                                                    </VBox>
+                                                                </f:content>
+                                                            </f:Card>
+
+                                                            <f:Card class="sapUiTinyMarginEnd" width="200px">
+                                                                <f:header>
+                                                                    <card:Header title="{i18n>duplicatesFound}" />
+                                                                </f:header>
+                                                                <f:content>
+                                                                    <VBox alignItems="Center" class="sapUiMediumMargin">
+                                                                        <Text text="{/duplicateRequests}" class="sapUiLargeText sapUiWarningText-asColor"/>
+                                                                        <Text text="{i18n>needsReview}" class="sapUiTinyText"/>
+                                                                    </VBox>
+                                                                </f:content>
+                                                            </f:Card>
+                                                        </items>
+                                                    </HBox>
+
+                                                    <!-- Filter Bar -->
+                                                    <Panel headerText="{i18n>filters}" expandable="true" expanded="false">
+                                                        <content>
+                                                            <HBox class="sapUiMediumMargin">
+                                                                <items>
+                                                                    <VBox class="sapUiMediumMarginEnd">
+                                                                        <Label text="{i18n>status}"/>
+                                                                        <MultiComboBox id="statusFilter"
+                                                                            items="{/statusOptions}"
+                                                                            selectedKeys="{/selectedStatuses}"
+                                                                            selectionFinish="onFilterChange">
+                                                                            <core:Item key="{key}" text="{text}"/>
+                                                                        </MultiComboBox>
+                                                                    </VBox>
+
+                                                                    <VBox class="sapUiMediumMarginEnd">
+                                                                        <Label text="{i18n>sourceSystem}"/>
+                                                                        <MultiComboBox id="sourceSystemFilter"
+                                                                            items="{/sourceSystemOptions}"
+                                                                            selectedKeys="{/selectedSourceSystems}"
+                                                                            selectionFinish="onFilterChange">
+                                                                            <core:Item key="{key}" text="{text}"/>
+                                                                        </MultiComboBox>
+                                                                    </VBox>
+
+                                                                    <VBox class="sapUiMediumMarginEnd">
+                                                                        <Label text="{i18n>requestType}"/>
+                                                                        <MultiComboBox id="requestTypeFilter"
+                                                                            items="{/requestTypeOptions}"
+                                                                            selectedKeys="{/selectedRequestTypes}"
+                                                                            selectionFinish="onFilterChange">
+                                                                            <core:Item key="{key}" text="{text}"/>
+                                                                        </MultiComboBox>
+                                                                    </VBox>
+
+                                                                    <VBox class="sapUiMediumMarginEnd">
+                                                                        <Label text="{i18n>dateRange}"/>
+                                                                        <DateRangeSelection id="dateRangeFilter"
+                                                                            change="onFilterChange"/>
+                                                                    </VBox>
+                                                                </items>
+                                                            </HBox>
+                                                        </content>
+                                                    </Panel>
+                                                </VBox>
+                                            </f:DynamicPageHeader>
+                                        </f:header>
+
+                                        <!-- Dynamic Page Content -->
+                                        <f:content>
+                                            <!-- Business Partner Requests Table -->
+                                            <Table id="businessPartnerTable"
+                                                items="{path: '/BusinessPartnerRequests', sorter: {path: 'createdAt', descending: true}}"
+                                                growing="true"
+                                                growingThreshold="50"
+                                                mode="SingleSelection"
+                                                selectionChange="onSelectionChange"
+                                                class="sapUiMediumMarginBegin sapUiMediumMarginEnd">
+
+                                                <headerToolbar>
+                                                    <Toolbar>
+                                                        <Title text="{i18n>businessPartnerRequestsList} ({/BusinessPartnerRequests/length})" level="H3"/>
+                                                        <ToolbarSpacer/>
+                                                        <SearchField liveChange="onSearch" width="300px"/>
+                                                        <Button icon="sap-icon://excel-attachment"
+                                                            tooltip="{i18n>exportToExcel}"
+                                                            press="onExportToExcel"/>
+                                                    </Toolbar>
+                                                </headerToolbar>
+
+                                                <columns>
+                                                    <Column>
+                                                        <Text text="{i18n>requestNumber}"/>
+                                                    </Column>
+                                                    <Column>
+                                                        <Text text="{i18n>partnerName}"/>
+                                                    </Column>
+                                                    <Column>
+                                                        <Text text="{i18n>requestType}"/>
+                                                    </Column>
+                                                    <Column>
+                                                        <Text text="{i18n>status}"/>
+                                                    </Column>
+                                                    <Column>
+                                                        <Text text="{i18n>sourceSystem}"/>
+                                                    </Column>
+                                                    <Column>
+                                                        <Text text="{i18n>requester}"/>
+                                                    </Column>
+                                                    <Column>
+                                                        <Text text="{i18n>createdAt}"/>
+                                                    </Column>
+                                                    <Column>
+                                                        <Text text="{i18n>actions}"/>
+                                                    </Column>
+                                                </columns>
+
+                                                <items>
+                                                    <ColumnListItem press="onItemPress">
+                                                        <cells>
+                                                            <Link text="{requestNumber}" press="onItemPress"/>
+                                                            <Text text="{partnerName}"/>
+                                                            <Text text="{requestType}"/>
+                                                            <ObjectStatus
+                                                                text="{status}"
+                                                                state="{parts: ['status'], formatter: '.formatStatusState'}"/>
+                                                            <Text text="{sourceSystem}"/>
+                                                            <Text text="{requesterName}"/>
+                                                            <Text text="{path: 'createdAt', formatter: '.formatDate'}"/>
+                                                            <HBox>
+                                                                <Button icon="sap-icon://detail-view"
+                                                                    tooltip="{i18n>viewDetails}"
+                                                                    type="Transparent"
+                                                                    press="onViewDetails"/>
+                                                                <Button icon="sap-icon://duplicate"
+                                                                    tooltip="{i18n>checkDuplicates}"
+                                                                    type="Transparent"
+                                                                    press="onCheckDuplicates"
+                                                                    visible="{path: 'status', formatter: '.showDuplicateButton'}"/>
+                                                                <Button icon="sap-icon://approvals"
+                                                                    tooltip="{i18n>approve}"
+                                                                    type="Transparent"
+                                                                    press="onApprove"
+                                                                    visible="{path: 'status', formatter: '.showApproveButton'}"/>
+                                                            </HBox>
+                                                        </cells>
+                                                    </ColumnListItem>
+                                                </items>
+                                            </Table>
+                                        </f:content>
+                                    </f:DynamicPage>
+                                </content>
+                            </Page>
+                        </f:beginColumnPages>
+
+                        <!-- Mid Column for Detail View -->
+                        <f:midColumnPages>
+                            <Page id="detailPage" showHeader="false">
+                                <content>
+                                    <!-- Detail view will be loaded dynamically -->
+                                </content>
+                            </Page>
+                        </f:midColumnPages>
+
+                        <!-- End Column for Additional Details -->
+                        <f:endColumnPages>
+                            <Page id="endPage" showHeader="false">
+                                <content>
+                                    <!-- Additional details will be loaded dynamically -->
+                                </content>
+                            </Page>
+                        </f:endColumnPages>
+
+                    </f:FlexibleColumnLayout>
+                </content>
+            </Page>
+        </pages>
+    </App>
+</mvc:View>

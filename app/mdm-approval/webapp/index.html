@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MDM Business Partner Approval</title>
+    <script id="sap-ui-bootstrap"
+        src="https://ui5.sap.com/resources/sap-ui-core.js"
+        data-sap-ui-theme="sap_horizon"
+        data-sap-ui-resourceroots='{
+            "com.company.mdmapproval": "./"
+        }'
+        data-sap-ui-libs="sap.m,sap.f,sap.fe.templates,sap.fe.core"
+        data-sap-ui-compatVersion="edge"
+        data-sap-ui-preload=""
+        data-sap-ui-frameOptions="allow"
+        data-sap-ui-async="true">
+    </script>
+    <script>
+        sap.ui.getCore().attachInit(function() {
+            new sap.m.Shell({
+                app: new sap.ui.core.ComponentContainer({
+                    height: "100%",
+                    name: "com.company.mdmapproval",
+                    async: true,
+                    manifest: true
+                })
+            }).placeAt("content");
+        });
+    </script>
+</head>
+<body class="sapUiBody" id="content">
+    <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; display: none;" id="loadingIndicator">
+        <div class="sapUiMediumMarginBottom">
+            <i class="sap-icon sap-icon--businessman" style="font-size: 4rem; color: #0070e0;"></i>
+        </div>
+        <h1 style="color: #0070e0; margin-bottom: 1rem;">MDM Business Partner Approval</h1>
+        <p style="margin-bottom: 2rem; color: #666;">Loading Fiori Elements application...</p>
+        <div class="sapUiMediumMargin">
+            <div class="sapUiBusyIndicator"></div>
+        </div>
+    </div>
+
+    <script>
+        // Show loading indicator initially
+        document.getElementById('loadingIndicator').style.display = 'block';
+
+        // Hide loading indicator when component loads
+        sap.ui.getCore().attachThemeChanged(function() {
+            setTimeout(function() {
+                document.getElementById('loadingIndicator').style.display = 'none';
+            }, 2000);
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>MDM Approval Application</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- SAP UI5 Bootstrap -->
+    <script id="sap-ui-bootstrap"
+        src="https://ui5.sap.com/1.108.0/resources/sap-ui-core.js"
+        data-sap-ui-libs="sap.m,sap.ui.core,sap.f,sap.suite.ui.commons"
+        data-sap-ui-resourceroots='{
+            "mdm.approval": "./"
+        }'
+        data-sap-ui-theme="sap_horizon"
+        data-sap-ui-async="true"
+        data-sap-ui-xx-waitForTheme="true">
+    </script>
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: "72", sans-serif;
+        }
+        .header {
+            background: #0070f2;
+            color: white;
+            padding: 1rem;
+            text-align: center;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        .tile-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+        .tile {
+            background: white;
+            border: 1px solid #d9d9d9;
+            border-radius: 8px;
+            padding: 1.5rem;
+            min-width: 300px;
+            flex: 1;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .tile:hover {
+            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+            transform: translateY(-2px);
+        }
+        .tile h3 {
+            color: #0070f2;
+            margin-top: 0;
+        }
+        .tile p {
+            color: #666;
+            margin: 0.5rem 0;
+        }
+        .status {
+            background: #e8f5e8;
+            color: #2b7d2b;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            display: inline-block;
+            margin-top: 0.5rem;
+        }
+        .api-section {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-top: 2rem;
+        }
+        .endpoint {
+            background: white;
+            border-left: 4px solid #0070f2;
+            padding: 1rem;
+            margin: 0.5rem 0;
+            border-radius: 0 4px 4px 0;
+        }
+        .method {
+            background: #28a745;
+            color: white;
+            padding: 0.2rem 0.5rem;
+            border-radius: 3px;
+            font-size: 0.8rem;
+            display: inline-block;
+            margin-right: 0.5rem;
+        }
+        .method.post { background: #007bff; }
+        .method.get { background: #28a745; }
+        .credentials {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 4px;
+            padding: 1rem;
+            margin: 1rem 0;
+        }
+        .test-button {
+            background: #0070f2;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 0.5rem 0.5rem 0.5rem 0;
+        }
+        .test-button:hover {
+            background: #005cbf;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🏢 SAP MDM Approval Application</h1>
+        <p>Master Data Management with Enhanced Duplicate Checking & Integration</p>
+    </div>
+
+    <div class="container">
+        <div class="credentials">
+            <h4>🔐 Test User Credentials</h4>
+            <p><strong>alice:secret</strong> - MDM Approver (Full Access) | <strong>bob:secret</strong> - System Owner | <strong>carol:secret</strong> - Business User</p>
+        </div>
+
+        <div class="tile-container">
+            <div class="tile" onclick="openUrl('/mdm/BusinessPartnerRequests', true)">
+                <h3>📋 Business Partner Requests</h3>
+                <p>View and manage all partner creation and update requests</p>
+                <p><strong>Features:</strong> Create/Update separation, Duplicate checking, Approval workflow</p>
+                <div class="status">2 Test Requests Available</div>
+                <button class="test-button" onclick="event.stopPropagation(); testDuplicateCheck()">Test Duplicate Check</button>
+            </div>
+
+            <div class="tile" onclick="openUrl('/mdm/ExistingPartners', true)">
+                <h3>🏢 Existing SAP Partners</h3>
+                <p>Browse current business partners in SAP system</p>
+                <p><strong>Features:</strong> Established VAT ID tracking, Partner status, Business channels</p>
+                <div class="status">5 Sample Partners Loaded</div>
+            </div>
+
+            <div class="tile" onclick="openUrl('/mdm/DuplicateChecks', true)">
+                <h3>🔍 Duplicate Review</h3>
+                <p>Review potential duplicates and make merge decisions</p>
+                <p><strong>Features:</strong> Merge recommendations, Decision tracking, Audit trail</p>
+                <div class="status">Ready for Testing</div>
+            </div>
+
+            <div class="tile" onclick="openUrl('/mdm/PartnerVatIds', true)">
+                <h3>🆔 VAT ID Management</h3>
+                <p>Manage partner VAT IDs and validation status</p>
+                <p><strong>Features:</strong> VIES validation, Country-specific checking</p>
+                <div class="status">VIES Integration Ready</div>
+            </div>
+        </div>
+
+        <div class="api-section">
+            <h3>🌐 Integration API Endpoints</h3>
+            <p>External systems can integrate using these REST endpoints with API key authentication:</p>
+
+            <div class="endpoint">
+                <span class="method post">POST</span>
+                <strong>/integration/partners/create</strong>
+                <p>Create new partner requests from external systems (Coupa, Salesforce, PI)</p>
+                <button class="test-button" onclick="testCreateAPI()">Test Create API</button>
+                <button class="test-button" onclick="showCreateSample()">View Sample JSON</button>
+            </div>
+
+            <div class="endpoint">
+                <span class="method post">POST</span>
+                <strong>/integration/partners/update</strong>
+                <p>Create update requests for existing partners</p>
+                <button class="test-button" onclick="testUpdateAPI()">Test Update API</button>
+            </div>
+
+            <div class="endpoint">
+                <span class="method get">GET</span>
+                <strong>/integration/partners/{requestNumber}/status</strong>
+                <p>Check status and approval history of requests</p>
+                <button class="test-button" onclick="testStatusAPI()">Test Status API</button>
+            </div>
+
+            <div class="endpoint">
+                <span class="method get">GET</span>
+                <strong>/integration/health</strong>
+                <p>Integration API health check and endpoint documentation</p>
+                <button class="test-button" onclick="openUrl('/integration/health', false)">Check Health</button>
+            </div>
+        </div>
+
+        <div class="api-section">
+            <h3>🧪 Testing Scenarios</h3>
+            <div class="endpoint">
+                <h4>Scenario 1: Established VAT ID Duplicate Detection</h4>
+                <p>Request <strong>MDM-20241012-0002</strong> has VAT ID <strong>987654321</strong> in <strong>US</strong> that matches existing partner <strong>BP100001</strong></p>
+                <button class="test-button" onclick="testScenario1()">Run Duplicate Check</button>
+                <button class="test-button" onclick="viewTestRequest()">View Test Request</button>
+            </div>
+
+            <div class="endpoint">
+                <h4>Scenario 2: Merge Decision Testing</h4>
+                <p>After duplicate detection, test merge with existing partner or create new partner options</p>
+                <button class="test-button" onclick="testMergeDecision()">Test Merge Decision</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function openUrl(path, requiresAuth) {
+            if (requiresAuth) {
+                // Open with basic auth prompt
+                const baseUrl = window.location.origin;
+                const fullUrl = baseUrl + path;
+
+                // Create a temporary form to trigger basic auth
+                const newWindow = window.open('', '_blank');
+                newWindow.document.write(`
+                    <html>
+                    <head><title>SAP MDM Service</title></head>
+                    <body style="font-family: Arial, sans-serif; padding: 20px;">
+                        <h2>🔐 Authentication Required</h2>
+                        <p>Please use one of these credentials:</p>
+                        <ul>
+                            <li><strong>alice:secret</strong> - MDM Approver (Full Access)</li>
+                            <li><strong>bob:secret</strong> - System Owner</li>
+                            <li><strong>carol:secret</strong> - Business User</li>
+                        </ul>
+                        <p><a href="${fullUrl}" target="_blank">Click here to access: ${path}</a></p>
+                        <p><em>Your browser will prompt for username and password.</em></p>
+                    </body>
+                    </html>
+                `);
+            } else {
+                window.open(path, '_blank');
+            }
+        }
+
+        function testDuplicateCheck() {
+            alert('🔍 Duplicate Check Test:\\n\\n' +
+                  '1. Access Business Partner Requests with alice:secret\\n' +
+                  '2. Find request "MDM-20241012-0002" (Global Tech Solutions Ltd)\\n' +
+                  '3. This request has US VAT ID 987654321\\n' +
+                  '4. It will match existing partner BP100001\\n' +
+                  '5. Status will change to "DuplicateReview"\\n' +
+                  '6. MDM approver can choose Merge or Create New');
+        }
+
+        function testCreateAPI() {
+            const sampleRequest = {
+                partnerName: "Test API Company",
+                entityType: "Supplier",
+                partnerRole: "Supplier",
+                businessChannels: "NONMERCH",
+                addresses: [{
+                    addressType: "Main",
+                    name1: "Test API Company",
+                    street: "API Street",
+                    streetNumber: "123",
+                    city: "Test City",
+                    postalCode: "12345",
+                    country_code: "US"
+                }],
+                emails: [{
+                    emailType: "Primary",
+                    emailAddress: "test@apicompany.com"
+                }],
+                vatIds: [{
+                    country_code: "US",
+                    vatNumber: "999888777"
+                }]
+            };
+
+            const curlCommand = `curl -X POST http://localhost:4004/integration/partners/create \\
+  -H "x-api-key: coupa-api-key-123" \\
+  -H "x-source-system: Coupa" \\
+  -H "Content-Type: application/json" \\
+  -d '${JSON.stringify(sampleRequest, null, 2)}'`;
+
+            navigator.clipboard.writeText(curlCommand).then(() => {
+                alert('✅ API Test Command Copied to Clipboard!\\n\\nRun this in your terminal to test the Create Partner API:\\n\\n' + curlCommand);
+            });
+        }
+
+        function testUpdateAPI() {
+            const updateRequest = {
+                existingBpNumber: "BP100001",
+                existingBpName: "Global Tech Solutions Inc",
+                changeDescription: "Update payment terms",
+                paymentTerms: "NET15"
+            };
+
+            const curlCommand = `curl -X POST http://localhost:4004/integration/partners/update \\
+  -H "x-api-key: coupa-api-key-123" \\
+  -H "x-source-system: Coupa" \\
+  -H "Content-Type: application/json" \\
+  -d '${JSON.stringify(updateRequest, null, 2)}'`;
+
+            navigator.clipboard.writeText(curlCommand).then(() => {
+                alert('✅ Update API Test Command Copied!\\n\\n' + curlCommand);
+            });
+        }
+
+        function testStatusAPI() {
+            const curlCommand = `curl -H "x-api-key: coupa-api-key-123" -H "x-source-system: Coupa" \\
+  http://localhost:4004/integration/partners/MDM-20241012-0001/status`;
+
+            navigator.clipboard.writeText(curlCommand).then(() => {
+                alert('✅ Status API Test Command Copied!\\n\\n' + curlCommand);
+            });
+        }
+
+        function testScenario1() {
+            const testInfo = `🧪 **Duplicate Detection Test Scenario**
+
+**Request Details:**
+• Request Number: MDM-20241012-0002
+• Partner Name: Global Tech Solutions Ltd
+• Established Address: US (San Francisco)
+• VAT ID: 987654321 (US)
+
+**Expected Match:**
+• Existing Partner: BP100001
+• Name: Global Tech Solutions Inc
+• Established VAT ID: 987654321 (US)
+
+**Test Steps:**
+1. Use credentials: alice:secret
+2. Access Business Partner Requests
+3. Find request MDM-20241012-0002
+4. The system should detect the duplicate
+5. Status should change to "DuplicateReview"
+
+**API Test Command:**`;
+
+            alert(testInfo);
+        }
+
+        function testMergeDecision() {
+            alert('🔗 **Merge Decision Testing**\\n\\n' +
+                  '**After duplicate detection:**\\n' +
+                  '1. Access duplicate check results\\n' +
+                  '2. Review merge recommendations\\n' +
+                  '3. Choose between:\\n' +
+                  '   • Merge with existing partner BP100001\\n' +
+                  '   • Create new partner despite duplicate\\n' +
+                  '4. Add decision comments\\n' +
+                  '5. Track audit trail in approval history');
+        }
+
+        function viewTestRequest() {
+            openUrl('/mdm/BusinessPartnerRequests?$filter=requestNumber eq \'MDM-20241012-0002\'', true);
+        }
+
+        function showCreateSample() {
+            const sample = `{
+  "partnerName": "ACME Corporation Ltd",
+  "entityType": "Supplier",
+  "partnerRole": "Supplier",
+  "businessChannels": "NONMERCH",
+  "coupaInternalNo": "COUPA-12345",
+  "paymentTerms": "NET30",
+  "paymentMethod": "BankTransfer",
+  "reconAccount": "2000000",
+  "addresses": [
+    {
+      "addressType": "Main",
+      "name1": "ACME Corporation Ltd",
+      "street": "Main Street",
+      "streetNumber": "123",
+      "city": "New York",
+      "postalCode": "10001",
+      "country_code": "US"
+    }
+  ],
+  "emails": [
+    {
+      "emailType": "Primary",
+      "emailAddress": "contact@acme.com"
+    }
+  ],
+  "vatIds": [
+    {
+      "country_code": "US",
+      "vatNumber": "123456789"
+    }
+  ]
+}`;
+
+            navigator.clipboard.writeText(sample).then(() => {
+                alert('✅ Sample JSON copied to clipboard!\\n\\nThis is the format for creating partner requests via API.');
+            });
+        }
+
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('🎉 SAP MDM Approval Application Dashboard Loaded');
+            console.log('🔗 Service Base URL: ' + window.location.origin + '/mdm/');
+            console.log('🔐 Test with: alice:secret, bob:secret, or carol:secret');
+        });
+    </script>
+</body>
+</html>
