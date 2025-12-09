@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="4.0" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+    <edmx:Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/Common.xml">
+        <edmx:Include Namespace="com.sap.vocabularies.Common.v1" Alias="Common"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/UI.xml">
+        <edmx:Include Namespace="com.sap.vocabularies.UI.v1" Alias="UI"/>
+    </edmx:Reference>
+    <edmx:DataServices>
+        <Schema Namespace="com.company.pisystemmonitor.annotations" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+
+            <!-- PI Requests Annotations -->
+            <Annotations Target="MDMService.PIRequests">
+
+                <!-- List Report Page -->
+                <Annotation Term="UI.LineItem">
+                    <Collection>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="requestNumber"/>
+                            <PropertyValue Property="Label" String="Request Number"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="partnerName"/>
+                            <PropertyValue Property="Label" String="Partner Name"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="entityType"/>
+                            <PropertyValue Property="Label" String="Type"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="requestType"/>
+                            <PropertyValue Property="Label" String="Request Type"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="status"/>
+                            <PropertyValue Property="Label" String="Status"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="systemMapping"/>
+                            <PropertyValue Property="Label" String="System Mapping"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="messageFormat"/>
+                            <PropertyValue Property="Label" String="Message Format"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="createdAt"/>
+                            <PropertyValue Property="Label" String="Created Date"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="requesterId"/>
+                            <PropertyValue Property="Label" String="Requester"/>
+                        </Record>
+                    </Collection>
+                </Annotation>
+
+                <!-- Selection Fields -->
+                <Annotation Term="UI.SelectionFields">
+                    <Collection>
+                        <PropertyPath>status</PropertyPath>
+                        <PropertyPath>systemMapping</PropertyPath>
+                        <PropertyPath>createdAt</PropertyPath>
+                    </Collection>
+                </Annotation>
+
+                <!-- Header Info -->
+                <Annotation Term="UI.HeaderInfo">
+                    <Record Type="UI.HeaderInfoType">
+                        <PropertyValue Property="TypeName" String="PI System Request"/>
+                        <PropertyValue Property="TypeNamePlural" String="PI System Requests"/>
+                        <PropertyValue Property="Title">
+                            <Record Type="UI.DataField">
+                                <PropertyValue Property="Value" Path="partnerName"/>
+                            </Record>
+                        </PropertyValue>
+                        <PropertyValue Property="Description">
+                            <Record Type="UI.DataField">
+                                <PropertyValue Property="Value" Path="requestNumber"/>
+                            </Record>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+
+                <!-- Object Page Facets -->
+                <Annotation Term="UI.Facets">
+                    <Collection>
+                        <!-- General Information Section -->
+                        <Record Type="UI.CollectionFacet">
+                            <PropertyValue Property="ID" String="GeneralInformation"/>
+                            <PropertyValue Property="Label" String="General Information"/>
+                            <PropertyValue Property="Facets">
+                                <Collection>
+                                    <Record Type="UI.ReferenceFacet">
+                                        <PropertyValue Property="ID" String="BasicInfo"/>
+                                        <PropertyValue Property="Label" String="Basic Information"/>
+                                        <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#BasicInfo"/>
+                                    </Record>
+                                </Collection>
+                            </PropertyValue>
+                        </Record>
+
+                        <!-- Address Information Table -->
+                        <Record Type="UI.ReferenceFacet">
+                            <PropertyValue Property="ID" String="AddressesTable"/>
+                            <PropertyValue Property="Label" String="Addresses"/>
+                            <PropertyValue Property="Target" AnnotationPath="addresses/@UI.LineItem"/>
+                        </Record>
+                    </Collection>
+                </Annotation>
+
+                <!-- Field Groups -->
+                <Annotation Term="UI.FieldGroup" Qualifier="BasicInfo">
+                    <Record Type="UI.FieldGroupType">
+                        <PropertyValue Property="Data">
+                            <Collection>
+                                <Record Type="UI.DataField">
+                                    <PropertyValue Property="Value" Path="partnerName"/>
+                                    <PropertyValue Property="Label" String="Partner Name"/>
+                                </Record>
+                                <Record Type="UI.DataField">
+                                    <PropertyValue Property="Value" Path="requestType"/>
+                                    <PropertyValue Property="Label" String="Request Type"/>
+                                </Record>
+                                <Record Type="UI.DataField">
+                                    <PropertyValue Property="Value" Path="systemMapping"/>
+                                    <PropertyValue Property="Label" String="System Mapping"/>
+                                </Record>
+                                <Record Type="UI.DataField">
+                                    <PropertyValue Property="Value" Path="messageFormat"/>
+                                    <PropertyValue Property="Label" String="Message Format"/>
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+
+            </Annotations>
+
+            <!-- Address Annotations -->
+            <Annotations Target="MDMService.PartnerAddresses">
+                <Annotation Term="UI.LineItem">
+                    <Collection>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="addressType"/>
+                            <PropertyValue Property="Label" String="Address Type"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="name1"/>
+                            <PropertyValue Property="Label" String="Name 1"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="street"/>
+                            <PropertyValue Property="Label" String="Street"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="city"/>
+                            <PropertyValue Property="Label" String="City"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="postalCode"/>
+                            <PropertyValue Property="Label" String="Postal Code"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="country_code"/>
+                            <PropertyValue Property="Label" String="Country"/>
+                        </Record>
+                    </Collection>
+                </Annotation>
+            </Annotations>
+
+        </Schema>
+    </edmx:DataServices>
+</edmx:Edmx>

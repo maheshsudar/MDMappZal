@@ -56,7 +56,7 @@
         "db": {
           "kind": "sqlite",
           "credentials": {
-            "url": "db.sqlite"
+            "url": "db/mdm-complete.db"
           }
         }
       },
@@ -99,7 +99,6 @@
     "app/salesforce-partners",
     "app/pi-system-monitor",
     "app/satellite-notifications",
-    "app/request-creation",
-    "app/admin-config"
+    "app/request-creation"
   ]
 }
